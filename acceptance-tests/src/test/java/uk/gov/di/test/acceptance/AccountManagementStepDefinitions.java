@@ -7,6 +7,8 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -20,12 +22,17 @@ import static uk.gov.di.test.acceptance.AccountJourneyPages.ENTER_PASSWORD_CHANG
 import static uk.gov.di.test.acceptance.AccountJourneyPages.ENTER_PASSWORD_DELETE_ACCOUNT;
 import static uk.gov.di.test.acceptance.AccountJourneyPages.MANAGE_YOUR_ACCOUNT;
 import static uk.gov.di.test.acceptance.AccountJourneyPages.PASSWORD_UPDATED_CONFIRMATION;
+import static uk.gov.di.test.acceptance.AccountJourneyPages.ENTER_NEW_EMAIL;
+import static uk.gov.di.test.acceptance.AuthenticationJourneyPages.CHECK_YOUR_EMAIL;
 
 public class AccountManagementStepDefinitions extends SignInStepDefinitions {
 
     private String emailAddress;
     private String password;
     private String newPassword;
+    private String newEmailAddress;
+    private String newPhoneNumber;
+    private String sixDigitCodeEmail;
 
     @Before
     public void setupWebdriver() throws MalformedURLException {
@@ -39,6 +46,9 @@ public class AccountManagementStepDefinitions extends SignInStepDefinitions {
     public void theExistingAccountManagementUserHasValidCredentials() {
         emailAddress = System.getenv().get("TEST_USER_EMAIL");
         password = System.getenv().get("TEST_USER_PASSWORD");
+        newEmailAddress = System.getenv().get("TEST_USER_NEW_EMAIL");
+        newPhoneNumber = System.getenv().get("TEST_USER_NEW_PHONE_NUMBER");
+        sixDigitCodeEmail = System.getenv().get("TEST_USER_EMAIL_CODE");
     }
 
     @When("the existing account management user navigates to account management")
@@ -146,5 +156,39 @@ public class AccountManagementStepDefinitions extends SignInStepDefinitions {
     @Then("the existing account management user is taken to the account exists page")
     public void theExistingAccountManagementUserIsTakenToTheAccountExistsPage() {
         waitForPageLoadThenValidate(ACCOUNT_EXISTS);
+    }
+
+    @Then("the existing account management user is asked to enter their new email address")
+    public void theExistingAccountManagementUserIsAskedToEnterTheirNewEmailAddress() {
+        waitForPageLoadThenValidate(ENTER_NEW_EMAIL);
+    }
+
+    @When("the existing account management user enters their new email address")
+    public void theExistingAccountManagementUserEntersTheirNewEmailAddress() {
+        WebElement emailField = driver.findElement(By.id("email"));
+        emailField.sendKeys(newEmailAddress);
+        findAndClickContinue();
+    }
+
+    @Then("the existing account management user is asked to enter the six digit security code from their email")
+    public void theExistingAccountManagementUserIsAskedToEnterTheSixDigitSecurityCodeFromTheirEmail() {
+        waitForPageLoadThenValidate(CHECK_YOUR_EMAIL);
+    }
+
+    @When("the existing account management user enters the six digit security code from their email")
+    public void theExistingAccountManagementUserEntersTheSixDigitSecurityCodeFromTheirEmail() {
+        WebElement sixDigitSecurityCodeField = driver.findElement(By.id("code"));
+        sixDigitSecurityCodeField.clear();
+        if (DEBUG_MODE) {
+            new WebDriverWait(driver, 60)
+                    .until(
+                            (ExpectedCondition<Boolean>)
+                                    driver ->
+                                            sixDigitSecurityCodeField.getAttribute("value").length()
+                                                    == 6);
+        } else {
+            sixDigitSecurityCodeField.sendKeys(sixDigitCodeEmail);
+        }
+        findAndClickContinue();
     }
 }

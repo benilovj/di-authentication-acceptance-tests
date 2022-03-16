@@ -65,6 +65,20 @@ Feature: Login Journey
       When the existing account management user clicks link by href "/manage-your-account"
       Then the existing account management user is taken to the manage your account page
 
+  Scenario: User changes their email
+    Given the account management services are running
+    And the existing account management user has valid credentials
+    When the existing account management user navigates to account management
+    Then the existing account management user is taken to the manage your account page
+    When the existing account management user clicks link by href "/enter-password?type=changeEmail"
+    Then the existing account management user is asked to enter their current password
+    When the existing account management user enter their current password
+    Then the existing account management user is asked to enter their new email address
+    When the existing account management user enters their new email address
+    Then the existing account management user is asked to enter the six digit security code from their email
+    When the existing account management user enters the six digit security code from their email
+
+
   Scenario: User deletes their account
       Given the account management services are running
       And the existing account management user has valid credentials
