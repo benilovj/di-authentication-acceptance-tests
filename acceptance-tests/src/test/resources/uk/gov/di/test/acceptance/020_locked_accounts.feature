@@ -1,5 +1,5 @@
 Feature: Locked accounts
-  Existing users get locked out of their accounts
+  Users get locked out of their account
 
   Scenario: New user enters incorrect email code 6 times
     Given the login services are running
