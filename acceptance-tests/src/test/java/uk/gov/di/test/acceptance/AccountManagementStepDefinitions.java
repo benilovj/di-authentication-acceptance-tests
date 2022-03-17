@@ -17,13 +17,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static uk.gov.di.test.acceptance.AccountJourneyPages.ACCOUNT_DELETED_CONFIRMATION;
 import static uk.gov.di.test.acceptance.AccountJourneyPages.ACCOUNT_EXISTS;
 import static uk.gov.di.test.acceptance.AccountJourneyPages.CHANGE_PASSWORD;
+import static uk.gov.di.test.acceptance.AccountJourneyPages.CHECK_YOUR_EMAIL;
 import static uk.gov.di.test.acceptance.AccountJourneyPages.DELETE_ACCOUNT;
+import static uk.gov.di.test.acceptance.AccountJourneyPages.ENTER_NEW_EMAIL;
+import static uk.gov.di.test.acceptance.AccountJourneyPages.ENTER_PASSWORD_CHANGE_EMAIL;
 import static uk.gov.di.test.acceptance.AccountJourneyPages.ENTER_PASSWORD_CHANGE_PASSWORD;
 import static uk.gov.di.test.acceptance.AccountJourneyPages.ENTER_PASSWORD_DELETE_ACCOUNT;
 import static uk.gov.di.test.acceptance.AccountJourneyPages.MANAGE_YOUR_ACCOUNT;
 import static uk.gov.di.test.acceptance.AccountJourneyPages.PASSWORD_UPDATED_CONFIRMATION;
-import static uk.gov.di.test.acceptance.AccountJourneyPages.ENTER_NEW_EMAIL;
-import static uk.gov.di.test.acceptance.AuthenticationJourneyPages.CHECK_YOUR_EMAIL;
 
 public class AccountManagementStepDefinitions extends SignInStepDefinitions {
 
@@ -170,12 +171,15 @@ public class AccountManagementStepDefinitions extends SignInStepDefinitions {
         findAndClickContinue();
     }
 
-    @Then("the existing account management user is asked to enter the six digit security code from their email")
-    public void theExistingAccountManagementUserIsAskedToEnterTheSixDigitSecurityCodeFromTheirEmail() {
+    @Then(
+            "the existing account management user is asked to enter the six digit security code from their email")
+    public void
+            theExistingAccountManagementUserIsAskedToEnterTheSixDigitSecurityCodeFromTheirEmail() {
         waitForPageLoadThenValidate(CHECK_YOUR_EMAIL);
     }
 
-    @When("the existing account management user enters the six digit security code from their email")
+    @When(
+            "the existing account management user enters the six digit security code from their email")
     public void theExistingAccountManagementUserEntersTheSixDigitSecurityCodeFromTheirEmail() {
         WebElement sixDigitSecurityCodeField = driver.findElement(By.id("code"));
         sixDigitSecurityCodeField.clear();
@@ -189,6 +193,18 @@ public class AccountManagementStepDefinitions extends SignInStepDefinitions {
         } else {
             sixDigitSecurityCodeField.sendKeys(sixDigitCodeEmail);
         }
+        findAndClickContinue();
+    }
+
+    @Then("the existing account management user is asked to enter their updated password")
+    public void theExistingAccountManagementUserIsAskedToEnterTheirUpdatedPassword() {
+        waitForPageLoadThenValidate(ENTER_PASSWORD_CHANGE_EMAIL);
+    }
+
+    @When("the existing account management user enters their new updated password")
+    public void theExistingAccountManagementUserEntersTheirNewUpdatedPassword() {
+        WebElement enterPasswordField = driver.findElement(By.id("password"));
+        enterPasswordField.sendKeys(newPassword);
         findAndClickContinue();
     }
 }

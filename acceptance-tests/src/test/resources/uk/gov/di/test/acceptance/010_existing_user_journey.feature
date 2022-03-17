@@ -71,8 +71,8 @@ Feature: Login Journey
     When the existing account management user navigates to account management
     Then the existing account management user is taken to the manage your account page
     When the existing account management user clicks link by href "/enter-password?type=changeEmail"
-    Then the existing account management user is asked to enter their current password
-    When the existing account management user enter their current password
+    Then the existing account management user is asked to enter their updated password
+    When the existing account management user enters their new updated password
     Then the existing account management user is asked to enter their new email address
     When the existing account management user enters their new email address
     Then the existing account management user is asked to enter the six digit security code from their email

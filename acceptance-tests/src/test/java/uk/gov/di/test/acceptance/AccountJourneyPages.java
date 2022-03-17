@@ -11,7 +11,9 @@ public enum AccountJourneyPages {
     ACCOUNT_DELETED_CONFIRMATION(
             "/account-deleted-confirmation", "You have deleted your GOV.UK account"),
     ACCOUNT_EXISTS("/enter-password-account-exists", "You have a GOV.UK account"),
-    ENTER_NEW_EMAIL("/change-email", "Enter your new email address");
+    ENTER_NEW_EMAIL("/change-email", "Enter your new email address"),
+    CHECK_YOUR_EMAIL("/check-your-email", "Check your email"),
+    ENTER_PASSWORD_CHANGE_EMAIL("/enter-password", "Enter your password");
 
     private static final String PRODUCT_NAME = "GOV.UK account";
 
