@@ -72,12 +72,27 @@ Feature: Login Journey
     Then the existing account management user is taken to the manage your account page
     When the existing account management user clicks link by href "/enter-password?type=changeEmail"
     Then the existing account management user is asked to enter their updated password
+    When the existing account management user uses their updated password
     When the existing account management user enters their new updated password
     Then the existing account management user is asked to enter their new email address
     When the existing account management user enters their new email address
     Then the existing account management user is asked to enter the six digit security code from their email
     When the existing account management user enters the six digit security code from their email
+    ##to be continued after changes to back end and DB
 
+  Scenario: User changes their phone number
+    Given the account management services are running
+    And the existing account management user has valid credentials
+    When the existing account management user navigates to account management
+    Then the existing account management user is taken to the manage your account page
+    When the existing account management user clicks link by href "/enter-password?type=changeEmail"
+    Then the existing account management user is asked to enter their updated password
+    When the existing account management user uses their updated password
+    When the existing account management user enters their new updated password
+    Then the existing user is asked to enter their new phone number
+    When the existing user enters their new phone number
+    Then the existing user is taken to the check your phone page
+    When the existing user enters the six digit security code from their phone
 
   Scenario: User deletes their account
       Given the account management services are running

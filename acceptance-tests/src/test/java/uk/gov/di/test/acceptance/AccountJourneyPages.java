@@ -13,7 +13,8 @@ public enum AccountJourneyPages {
     ACCOUNT_EXISTS("/enter-password-account-exists", "You have a GOV.UK account"),
     ENTER_NEW_EMAIL("/change-email", "Enter your new email address"),
     CHECK_YOUR_EMAIL("/check-your-email", "Check your email"),
-    ENTER_PASSWORD_CHANGE_EMAIL("/enter-password", "Enter your password");
+    ENTER_PASSWORD_CHANGE_EMAIL("/enter-password", "Enter your password"),
+    CHANGE_PHONE_NUMBER("/change-phone-number","Enter your new mobile phone number");
 
     private static final String PRODUCT_NAME = "GOV.UK account";
 

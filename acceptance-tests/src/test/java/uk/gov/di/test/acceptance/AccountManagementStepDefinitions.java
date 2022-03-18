@@ -25,6 +25,7 @@ import static uk.gov.di.test.acceptance.AccountJourneyPages.ENTER_PASSWORD_CHANG
 import static uk.gov.di.test.acceptance.AccountJourneyPages.ENTER_PASSWORD_DELETE_ACCOUNT;
 import static uk.gov.di.test.acceptance.AccountJourneyPages.MANAGE_YOUR_ACCOUNT;
 import static uk.gov.di.test.acceptance.AccountJourneyPages.PASSWORD_UPDATED_CONFIRMATION;
+import static uk.gov.di.test.acceptance.AccountJourneyPages.CHANGE_PHONE_NUMBER;
 
 public class AccountManagementStepDefinitions extends SignInStepDefinitions {
 
@@ -206,5 +207,22 @@ public class AccountManagementStepDefinitions extends SignInStepDefinitions {
         WebElement enterPasswordField = driver.findElement(By.id("password"));
         enterPasswordField.sendKeys(newPassword);
         findAndClickContinue();
+    }
+
+    @Then("the existing user is asked to enter their new phone number")
+    public void theExistingUserIsAskedToEnterTheirNewPhoneNumber() {
+        waitForPageLoadThenValidate(CHANGE_PHONE_NUMBER);
+    }
+
+    @When("the existing user enters their new phone number")
+    public void theExistingUserEntersTheirNewPhoneNumber() {
+        WebElement phoneNumberField = driver.findElement(By.id("phoneNumber"));
+        phoneNumberField.sendKeys(newPhoneNumber);
+        findAndClickContinue();
+    }
+
+    @Then("the existing user is taken to the check your phone page")
+    public void theExistingUserIsTakenToTheCheckYourPhonePage() {
+        waitForPageLoadThenValidate(AuthenticationJourneyPages.CHECK_YOUR_PHONE);
     }
 }
