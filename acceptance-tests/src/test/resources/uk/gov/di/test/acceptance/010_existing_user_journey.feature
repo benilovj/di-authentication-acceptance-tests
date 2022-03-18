@@ -85,14 +85,17 @@ Feature: Login Journey
     And the existing account management user has valid credentials
     When the existing account management user navigates to account management
     Then the existing account management user is taken to the manage your account page
-    When the existing account management user clicks link by href "/enter-password?type=changeEmail"
+    When the existing account management user clicks link by href "/enter-password?type=changePhoneNumber"
     Then the existing account management user is asked to enter their updated password
     When the existing account management user uses their updated password
     When the existing account management user enters their new updated password
-    Then the existing user is asked to enter their new phone number
-    When the existing user enters their new phone number
-    Then the existing user is taken to the check your phone page
+    Then the existing account management user is asked to enter their new phone number
+    When the existing account management user enters their new phone number
+    Then the existing account management user is taken to the check your phone page
     When the existing user enters the six digit security code from their phone
+    Then the existing account management user is taken to the phone number updated confirmation page
+    When the existing account management user clicks link by href "/manage-your-account"
+    Then the existing account management user is taken to the manage your account page
 
   Scenario: User deletes their account
       Given the account management services are running

@@ -14,6 +14,7 @@ import java.net.MalformedURLException;
 import java.net.URI;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static uk.gov.di.test.acceptance.AccountJourneyPages.ACCOUNT_DELETED_CONFIRMATION;
 import static uk.gov.di.test.acceptance.AccountJourneyPages.ACCOUNT_EXISTS;
 import static uk.gov.di.test.acceptance.AccountJourneyPages.CHANGE_PASSWORD;
@@ -26,6 +27,7 @@ import static uk.gov.di.test.acceptance.AccountJourneyPages.ENTER_PASSWORD_DELET
 import static uk.gov.di.test.acceptance.AccountJourneyPages.MANAGE_YOUR_ACCOUNT;
 import static uk.gov.di.test.acceptance.AccountJourneyPages.PASSWORD_UPDATED_CONFIRMATION;
 import static uk.gov.di.test.acceptance.AccountJourneyPages.CHANGE_PHONE_NUMBER;
+import static uk.gov.di.test.acceptance.AccountJourneyPages.PHONE_NUMBER_UPDATED;
 
 public class AccountManagementStepDefinitions extends SignInStepDefinitions {
 
@@ -209,20 +211,25 @@ public class AccountManagementStepDefinitions extends SignInStepDefinitions {
         findAndClickContinue();
     }
 
-    @Then("the existing user is asked to enter their new phone number")
-    public void theExistingUserIsAskedToEnterTheirNewPhoneNumber() {
+    @Then("the existing account management user is asked to enter their new phone number")
+    public void theExistingAccountManagementUserIsAskedToEnterTheirNewPhoneNumber() {
         waitForPageLoadThenValidate(CHANGE_PHONE_NUMBER);
     }
 
-    @When("the existing user enters their new phone number")
-    public void theExistingUserEntersTheirNewPhoneNumber() {
+    @When("the existing account management user enters their new phone number")
+    public void theExistingAccountManagementUserEntersTheirNewPhoneNumber() {
         WebElement phoneNumberField = driver.findElement(By.id("phoneNumber"));
         phoneNumberField.sendKeys(newPhoneNumber);
         findAndClickContinue();
     }
 
-    @Then("the existing user is taken to the check your phone page")
-    public void theExistingUserIsTakenToTheCheckYourPhonePage() {
+    @Then("the existing account management user is taken to the check your phone page")
+    public void theExistingAccountManagementUserIsTakenToTheCheckYourPhonePage() {
         waitForPageLoadThenValidate(AuthenticationJourneyPages.CHECK_YOUR_PHONE);
+    }
+
+    @Then("the existing account management user is taken to the phone number updated confirmation page")
+    public void theExistingAccountManagementUserIsTakenToThePhoneNumberUpdatedConfirmationPage() {
+        waitForPageLoadThenValidate(PHONE_NUMBER_UPDATED);
     }
 }
