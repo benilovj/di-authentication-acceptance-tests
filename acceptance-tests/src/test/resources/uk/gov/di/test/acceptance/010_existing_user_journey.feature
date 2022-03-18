@@ -71,6 +71,9 @@ Feature: Login Journey
     When the existing account management user navigates to account management
     Then the existing account management user is taken to the manage your account page
     When the existing account management user clicks link by href "/enter-password?type=changeEmail"
+    And the existing account management user clicks link by href "/manage-your-account"
+    Then the existing account management user is taken to the manage your account page
+    When the existing account management user clicks link by href "/enter-password?type=changeEmail"
     Then the existing account management user is asked to enter their updated password
     When the existing account management user uses their updated password
     When the existing account management user enters their new updated password
@@ -84,6 +87,9 @@ Feature: Login Journey
     Given the account management services are running
     And the existing account management user has valid credentials
     When the existing account management user navigates to account management
+    Then the existing account management user is taken to the manage your account page
+    When the existing account management user clicks link by href "/enter-password?type=changePhoneNumber"
+    And the existing account management user clicks link by href "/manage-your-account"
     Then the existing account management user is taken to the manage your account page
     When the existing account management user clicks link by href "/enter-password?type=changePhoneNumber"
     Then the existing account management user is asked to enter their updated password
