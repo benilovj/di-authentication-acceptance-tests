@@ -26,6 +26,10 @@ public class LoginStepDefinitions extends SignInStepDefinitions {
     private String emailAddress;
     private String password;
     private String sixDigitCodePhone;
+    private String newEmailAddress;
+    private String newPhoneNumber;
+    private String sixDigitCodeEmail;
+    private String resetPassword;
 
     @Before
     public void setupWebdriver() throws MalformedURLException {
@@ -40,6 +44,10 @@ public class LoginStepDefinitions extends SignInStepDefinitions {
         emailAddress = System.getenv().get("TEST_USER_EMAIL");
         password = System.getenv().get("TEST_USER_PASSWORD");
         sixDigitCodePhone = System.getenv().get("TEST_USER_PHONE_CODE");
+        newEmailAddress = System.getenv().get("TEST_USER_NEW_EMAIL");
+        newPhoneNumber = System.getenv().get("TEST_USER_NEW_PHONE_NUMBER");
+        sixDigitCodeEmail = System.getenv().get("TEST_USER_EMAIL_CODE");
+        resetPassword = System.getenv().get("TEST_USER_RESET_PASSWORD");
     }
 
     @And("the existing user has invalid credentials")

@@ -14,10 +14,10 @@ import java.net.MalformedURLException;
 import java.net.URI;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static uk.gov.di.test.acceptance.AccountJourneyPages.ACCOUNT_DELETED_CONFIRMATION;
 import static uk.gov.di.test.acceptance.AccountJourneyPages.ACCOUNT_EXISTS;
 import static uk.gov.di.test.acceptance.AccountJourneyPages.CHANGE_PASSWORD;
+import static uk.gov.di.test.acceptance.AccountJourneyPages.CHANGE_PHONE_NUMBER;
 import static uk.gov.di.test.acceptance.AccountJourneyPages.CHECK_YOUR_EMAIL;
 import static uk.gov.di.test.acceptance.AccountJourneyPages.DELETE_ACCOUNT;
 import static uk.gov.di.test.acceptance.AccountJourneyPages.ENTER_NEW_EMAIL;
@@ -26,7 +26,6 @@ import static uk.gov.di.test.acceptance.AccountJourneyPages.ENTER_PASSWORD_CHANG
 import static uk.gov.di.test.acceptance.AccountJourneyPages.ENTER_PASSWORD_DELETE_ACCOUNT;
 import static uk.gov.di.test.acceptance.AccountJourneyPages.MANAGE_YOUR_ACCOUNT;
 import static uk.gov.di.test.acceptance.AccountJourneyPages.PASSWORD_UPDATED_CONFIRMATION;
-import static uk.gov.di.test.acceptance.AccountJourneyPages.CHANGE_PHONE_NUMBER;
 import static uk.gov.di.test.acceptance.AccountJourneyPages.PHONE_NUMBER_UPDATED;
 
 public class AccountManagementStepDefinitions extends SignInStepDefinitions {
@@ -37,6 +36,7 @@ public class AccountManagementStepDefinitions extends SignInStepDefinitions {
     private String newEmailAddress;
     private String newPhoneNumber;
     private String sixDigitCodeEmail;
+    private String resetPassword;
 
     @Before
     public void setupWebdriver() throws MalformedURLException {
@@ -53,6 +53,7 @@ public class AccountManagementStepDefinitions extends SignInStepDefinitions {
         newEmailAddress = System.getenv().get("TEST_USER_NEW_EMAIL");
         newPhoneNumber = System.getenv().get("TEST_USER_NEW_PHONE_NUMBER");
         sixDigitCodeEmail = System.getenv().get("TEST_USER_EMAIL_CODE");
+        resetPassword = System.getenv().get("TEST_USER_RESET_PASSWORD");
     }
 
     @When("the existing account management user navigates to account management")
@@ -228,7 +229,8 @@ public class AccountManagementStepDefinitions extends SignInStepDefinitions {
         waitForPageLoadThenValidate(AuthenticationJourneyPages.CHECK_YOUR_PHONE);
     }
 
-    @Then("the existing account management user is taken to the phone number updated confirmation page")
+    @Then(
+            "the existing account management user is taken to the phone number updated confirmation page")
     public void theExistingAccountManagementUserIsTakenToThePhoneNumberUpdatedConfirmationPage() {
         waitForPageLoadThenValidate(PHONE_NUMBER_UPDATED);
     }

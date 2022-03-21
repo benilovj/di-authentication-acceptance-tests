@@ -14,8 +14,9 @@ public enum AccountJourneyPages {
     ENTER_NEW_EMAIL("/change-email", "Enter your new email address"),
     CHECK_YOUR_EMAIL("/check-your-email", "Check your email"),
     ENTER_PASSWORD_CHANGE_EMAIL("/enter-password", "Enter your password"),
-    CHANGE_PHONE_NUMBER("/change-phone-number","Enter your new mobile phone number"),
-    PHONE_NUMBER_UPDATED("/phone-number-updated-confirmation", "You have changed your phone number");
+    CHANGE_PHONE_NUMBER("/change-phone-number", "Enter your new mobile phone number"),
+    PHONE_NUMBER_UPDATED(
+            "/phone-number-updated-confirmation", "You have changed your phone number");
 
     private static final String PRODUCT_NAME = "GOV.UK account";
 
