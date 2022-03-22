@@ -84,6 +84,12 @@ Feature: Login Journey
       Given the account management services are running
       And the existing account management user has valid credentials
       When the existing account management user navigates to account management
+      When the existing account management user selects sign in
+      Then the exiting account management user is asked to enter their current email address
+      When the existing account management user enters their current email address
+      When the existing account management user uses their updated password
+      And the existing account management user enters their updated password
+      When the existing user enters the six digit security code from their phone
       Then the existing account management user is taken to the manage your account page
       When the existing account management user clicks link by href "/enter-password?type=deleteAccount"
       Then the existing account management user is asked to enter their password

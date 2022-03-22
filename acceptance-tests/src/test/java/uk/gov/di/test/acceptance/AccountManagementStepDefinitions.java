@@ -155,4 +155,10 @@ public class AccountManagementStepDefinitions extends SignInStepDefinitions {
     public void theExistingAccountManagementUserIsTakenToTheAccountExistsPage() {
         waitForPageLoadThenValidate(ACCOUNT_EXISTS);
     }
+
+    @When("the existing account management user selects sign in")
+    public void theExistingAccountManagementUserSelectsSignIn() {
+        WebElement link = driver.findElement(By.id("sign-in-link"));
+        link.click();
+    }
 }
