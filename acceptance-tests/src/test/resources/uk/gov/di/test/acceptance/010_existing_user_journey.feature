@@ -71,6 +71,11 @@ Feature: Login Journey
     When the existing user visits the stub relying party
     And the existing user clicks "govuk-signin-button"
     Then the existing user is taken to the Identity Provider Login Page
+    When the existing user selects sign in
+    Then the existing user is taken to the enter your email page
+    When the existing user enters their email address
+    Then the existing user is prompted for their password
+    When the existing user clicks "/reset-password-check-email"
 
   Scenario: User deletes their account
       Given the account management services are running
