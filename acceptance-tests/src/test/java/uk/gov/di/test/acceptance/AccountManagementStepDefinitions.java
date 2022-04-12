@@ -20,6 +20,8 @@ import static uk.gov.di.test.acceptance.AccountJourneyPages.ENTER_PASSWORD_CHANG
 import static uk.gov.di.test.acceptance.AccountJourneyPages.ENTER_PASSWORD_DELETE_ACCOUNT;
 import static uk.gov.di.test.acceptance.AccountJourneyPages.MANAGE_YOUR_ACCOUNT;
 import static uk.gov.di.test.acceptance.AccountJourneyPages.PASSWORD_UPDATED_CONFIRMATION;
+import static uk.gov.di.test.acceptance.AccountJourneyPages.RESET_PASSWORD;
+import static uk.gov.di.test.acceptance.AuthenticationJourneyPages.CHECK_YOUR_PHONE;
 
 public class AccountManagementStepDefinitions extends SignInStepDefinitions {
 
@@ -30,6 +32,7 @@ public class AccountManagementStepDefinitions extends SignInStepDefinitions {
     private String newPhoneNumber;
     private String sixDigitCodeEmail;
     private String resetPassword;
+    private String sixDigitCodePhone;
 
     @Before
     public void setupWebdriver() throws MalformedURLException {
@@ -47,6 +50,7 @@ public class AccountManagementStepDefinitions extends SignInStepDefinitions {
         newPhoneNumber = System.getenv().get("TEST_USER_NEW_PHONE_NUMBER");
         sixDigitCodeEmail = System.getenv().get("TEST_USER_EMAIL_CODE");
         resetPassword = System.getenv().get("TEST_USER_RESET_PASSWORD");
+        sixDigitCodePhone = System.getenv().get("TEST_USER_PHONE_CODE");
     }
 
     @When("the existing account management user navigates to account management")
@@ -160,5 +164,45 @@ public class AccountManagementStepDefinitions extends SignInStepDefinitions {
     public void theExistingAccountManagementUserSelectsSignIn() {
         WebElement link = driver.findElement(By.id("sign-in-link"));
         link.click();
+    }
+
+    @Then("the existing account management user is asked to enter their email code")
+    public void theExistingAccountManagementUserIsAskedToEnterTheirEmailCode() {
+        WebElement enterCodeField = driver.findElement(By.id("code"));
+        enterCodeField.clear();
+        enterCodeField.sendKeys(sixDigitCodeEmail);
+        findAndClickContinue();
+    }
+
+    @Then("the existing account management user is taken to the reset password page")
+    public void theExistingAccountManagementUserIsTakenToTheResetPasswordPage() {
+        waitForPageLoadThenValidate(RESET_PASSWORD);
+    }
+
+    @When("the existing account management user uses their reset password")
+    public void theExistingAccountManagementUserUsesTheirResetPassword() {
+        resetPassword = System.getenv().get("TEST_USER_RESET_PASSWORD");
+    }
+
+    @And("the existing account management user enters their reset password")
+    public void theExistingAccountManagementUserEntersTheirResetPassword() {
+        WebElement enterPasswordField = driver.findElement(By.id("password"));
+        enterPasswordField.sendKeys(resetPassword);
+        WebElement confirmPasswordField = driver.findElement(By.id("confirm-password"));
+        confirmPasswordField.sendKeys(resetPassword);
+        findAndClickContinue();
+    }
+
+    @Then("the existing account management user is taken to the check your phone page")
+    public void theExistingAccountManagementUserIsTakenToTheCheckYourPhonePage() {
+        waitForPageLoadThenValidate(CHECK_YOUR_PHONE);
+    }
+
+    @When("the existing account management user enters their phone code")
+    public void theExistingAccountManagementUserEntersTheirPhoneCode() {
+        WebElement enterCodeField = driver.findElement(By.id("code"));
+        enterCodeField.clear();
+        enterCodeField.sendKeys(sixDigitCodePhone);
+        findAndClickContinue();
     }
 }
