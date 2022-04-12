@@ -76,7 +76,7 @@ Feature: Login Journey
     ##Then the exiting account management user is asked to enter their current email address
     When the existing account management user enters their current email address
     Then the existing account management user is asked to enter their password
-    When the existing account management user selects I've forgotten my password
+    When the existing account management user clicks link by href "/reset-password-request"
     ##Rest to be added when FE implementation is in, for email to be changed to code
     Then the existing account management user is asked to enter their email code
     Then the existing account management user is taken to the reset password page
