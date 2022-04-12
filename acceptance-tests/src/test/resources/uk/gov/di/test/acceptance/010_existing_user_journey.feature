@@ -84,27 +84,42 @@ Feature: Login Journey
     And the existing account management user enters their reset password
     Then the existing account management user is taken to the check your phone page
     When the existing account management user enters their phone code
-
-
+    Then the existing account management user is taken to the manage your account page
 
   Scenario: User deletes their account
-      Given the account management services are running
-      And the existing account management user has valid credentials
-      When the existing account management user navigates to account management
-      When the existing account management user selects sign in
+      #Given the account management services are running
+      #And the existing account management user has valid credentials
+      #When the existing account management user navigates to account management
+      #When the existing account management user selects sign in
       ##Then the exiting account management user is asked to enter their current email address
-      When the existing account management user enters their current email address
-      When the existing account management user uses their updated password
-      And the existing account management user enters their updated password
-      When the existing user enters the six digit security code from their phone
-      Then the existing account management user is taken to the manage your account page
-      When the existing account management user clicks link by href "/enter-password?type=deleteAccount"
-      Then the existing account management user is asked to enter their password
-      When the existing account management user uses their updated password
-      And the existing account management user enters their updated password to delete account
-      Then the existing account management user is taken to the delete account page
-      When the user clicks button by text Delete account
-      Then the existing account management user is taken to the account deleted confirmation page
-      When the not logged in user navigates to account root
-      Then the not logged in user is taken to the Identity Provider Login Page
+      #When the existing account management user enters their current email address
+      #When the existing account management user uses their updated password
+      #And the existing account management user enters their updated password
+      #When the existing user enters the six digit security code from their phone
+      #Then the existing account management user is taken to the manage your account page
+      #When the existing account management user clicks link by href "/enter-password?type=deleteAccount"
+      #Then the existing account management user is asked to enter their password
+      #When the existing account management user uses their updated password
+      #And the existing account management user enters their updated password to delete account
+      #Then the existing account management user is taken to the delete account page
+      #When the user clicks button by text Delete account
+      #Then the existing account management user is taken to the account deleted confirmation page
+      #When the not logged in user navigates to account root
+      #Then the not logged in user is taken to the Identity Provider Login Page
+
+    Given the account management services are running
+    And the existing account management user has valid credentials
+    When the existing account management user navigates to account management
+    Then the existing account management user is taken to the manage your account page
+    When the existing account management user clicks link by href "/enter-password?type=deleteAccount"
+    Then the existing account management user is asked to enter their password
+    When the existing account management user uses their reset password
+    And the existing account management user enters their reset password to delete account
+    #When the existing account management user uses their updated password
+    #And the existing account management user enters their updated password to delete account
+    Then the existing account management user is taken to the delete account page
+    When the user clicks button by text Delete account
+    Then the existing account management user is taken to the account deleted confirmation page
+    When the not logged in user navigates to account root
+    Then the not logged in user is taken to the Identity Provider Login Page
 

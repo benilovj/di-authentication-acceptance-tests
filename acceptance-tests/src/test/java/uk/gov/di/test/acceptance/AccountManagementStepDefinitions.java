@@ -205,4 +205,11 @@ public class AccountManagementStepDefinitions extends SignInStepDefinitions {
         enterCodeField.sendKeys(sixDigitCodePhone);
         findAndClickContinue();
     }
+
+    @And("the existing account management user enters their reset password to delete account")
+    public void theExistingAccountManagementUserEntersTheirResetPasswordToDeleteAccount() {
+        WebElement enterPasswordField = driver.findElement(By.id("password"));
+        enterPasswordField.sendKeys(resetPassword);
+        findAndClickContinue();
+    }
 }
