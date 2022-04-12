@@ -7,6 +7,8 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -166,14 +168,6 @@ public class AccountManagementStepDefinitions extends SignInStepDefinitions {
         link.click();
     }
 
-    @Then("the existing account management user is asked to enter their email code")
-    public void theExistingAccountManagementUserIsAskedToEnterTheirEmailCode() {
-        WebElement enterCodeField = driver.findElement(By.id("code"));
-        enterCodeField.clear();
-        enterCodeField.sendKeys(sixDigitCodeEmail);
-        findAndClickContinue();
-    }
-
     @Then("the existing account management user is taken to the reset password page")
     public void theExistingAccountManagementUserIsTakenToTheResetPasswordPage() {
         waitForPageLoadThenValidate(RESET_PASSWORD);
@@ -198,11 +192,19 @@ public class AccountManagementStepDefinitions extends SignInStepDefinitions {
         waitForPageLoadThenValidate(CHECK_YOUR_PHONE);
     }
 
-    @When("the existing account management user enters their phone code")
-    public void theExistingAccountManagementUserEntersTheirPhoneCode() {
-        WebElement enterCodeField = driver.findElement(By.id("code"));
-        enterCodeField.clear();
-        enterCodeField.sendKeys(sixDigitCodePhone);
+    @When("the existing account management user enters the code from their phone")
+    public void theExistingAccountManagementUserEntersTheCodeFromTheirPhone() {
+        WebElement sixDigitSecurityCodeField = driver.findElement(By.id("code"));
+        if (DEBUG_MODE) {
+            new WebDriverWait(driver, 60)
+                    .until(
+                            (ExpectedCondition<Boolean>)
+                                    driver ->
+                                            sixDigitSecurityCodeField.getAttribute("value").length()
+                                                    == 6);
+        } else {
+            sixDigitSecurityCodeField.sendKeys(sixDigitCodePhone);
+        }
         findAndClickContinue();
     }
 
@@ -210,6 +212,23 @@ public class AccountManagementStepDefinitions extends SignInStepDefinitions {
     public void theExistingAccountManagementUserEntersTheirResetPasswordToDeleteAccount() {
         WebElement enterPasswordField = driver.findElement(By.id("password"));
         enterPasswordField.sendKeys(resetPassword);
+        findAndClickContinue();
+    }
+
+    @Then("the existing account management user is asked to enter the code from their email")
+    public void theExistingAccountManagementUserIsAskedToEnterTheCodeFromTheirEmail() {
+        WebElement sixDigitSecurityCodeField = driver.findElement(By.id("code"));
+        sixDigitSecurityCodeField.clear();
+        if (DEBUG_MODE) {
+            new WebDriverWait(driver, 60)
+                    .until(
+                            (ExpectedCondition<Boolean>)
+                                    driver ->
+                                            sixDigitSecurityCodeField.getAttribute("value").length()
+                                                    == 6);
+        } else {
+            sixDigitSecurityCodeField.sendKeys(sixDigitCodeEmail);
+        }
         findAndClickContinue();
     }
 }

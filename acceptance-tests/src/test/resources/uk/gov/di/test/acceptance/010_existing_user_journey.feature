@@ -78,12 +78,12 @@ Feature: Login Journey
     Then the existing account management user is asked to enter their password
     When the existing account management user clicks link by href "/reset-password-request"
     ##Rest to be added when FE implementation is in, for email to be changed to code
-    Then the existing account management user is asked to enter their email code
+    Then the existing account management user is asked to enter the code from their email
     Then the existing account management user is taken to the reset password page
     When the existing account management user uses their reset password
     And the existing account management user enters their reset password
     Then the existing account management user is taken to the check your phone page
-    When the existing account management user enters their phone code
+    When the existing account management user enters the code from their phone
     Then the existing account management user is taken to the manage your account page
 
   Scenario: User deletes their account
