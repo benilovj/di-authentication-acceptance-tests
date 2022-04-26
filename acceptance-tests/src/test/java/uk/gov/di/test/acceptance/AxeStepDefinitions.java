@@ -7,7 +7,7 @@ import org.openqa.selenium.By;
 import org.json.JSONObject;
 import org.json.JSONArray;
 import com.deque.axe.AXE;
-
+import static org.junit.Assert.assertEquals;
 import java.net.URL;
 
 import static uk.gov.di.test.acceptance.SignInStepDefinitions.driver;
@@ -27,8 +27,9 @@ public class AxeStepDefinitions {
         JSONObject responseJSON = new AXE.Builder(driver, scriptUrl)
                 .options("{ runOnly: { type: 'tag', values: ['wcag2a','wcag2aa'] } }")
                 .setTimeout(60000).analyze();
-        //JSONArray violations = JSONObject.getJSONArray("violations");
+        JSONArray violations = responseJSON.getJSONArray("violations");
         System.out.println(responseJSON.toString(4));
+        assertEquals(violations.length(), 0);
     }
 
     @Then("the user gets results")
