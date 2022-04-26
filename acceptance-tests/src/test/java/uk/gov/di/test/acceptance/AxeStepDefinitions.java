@@ -27,6 +27,8 @@ public class AxeStepDefinitions {
         JSONObject responseJSON = new AXE.Builder(driver, scriptUrl)
                 .options("{ runOnly: { type: 'tag', values: ['wcag2a','wcag2aa'] } }")
                 .setTimeout(60000).analyze();
+        //JSONArray violations = JSONObject.getJSONArray("violations");
+        System.out.println(responseJSON.toString(4));
     }
 
     @Then("the user gets results")
