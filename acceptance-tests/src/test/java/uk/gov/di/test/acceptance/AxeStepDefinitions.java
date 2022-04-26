@@ -10,6 +10,7 @@ import org.openqa.selenium.WebElement;
 
 import java.net.MalformedURLException;
 import java.net.URI;
+import java.net.URL;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static uk.gov.di.test.acceptance.AccountJourneyPages.ACCOUNT_DELETED_CONFIRMATION;
@@ -23,6 +24,9 @@ import static uk.gov.di.test.acceptance.AccountJourneyPages.PASSWORD_UPDATED_CON
 import static uk.gov.di.test.acceptance.SignInStepDefinitions.driver;
 
 public class AxeStepDefinitions {
+
+    private static final URL scriptUrl = AxeStepDefinitions.class.getResource("/axe.min.js");
+
     @Given("a user navigates to the build account page")
     public void a_user_navigates_to_the_build_account_page() throws InterruptedException {
         driver.get("https://signin.build.account.gov.uk/");
