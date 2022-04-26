@@ -24,7 +24,9 @@ public class AxeStepDefinitions {
     @When("a user runs accessibility tests")
     public void a_user_runs_accessibility_tests() {
         System.out.println("Page in test = " + driver.getTitle());
-        JSONObject responseJSON = new AXE.Builder(driver.get(), scriptUrl).analyze();
+        JSONObject responseJSON = new AXE.Builder(driver, scriptUrl)
+                .options("{ runOnly: { type: 'tag', values: ['wcag2a','wcag2aa'] } }")
+                .setTimeout(60000).analyze();
     }
 
     @Then("the user gets results")
