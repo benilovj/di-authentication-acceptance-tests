@@ -15,7 +15,8 @@ def dependencyVersions = [
         junit_version: '5.8.2',
         cucumber_version: '7.3.2',
         axe_version: '3.0',
-        json_version: '20220320'
+        json_version: '20220320',
+        aws_sdk_version: "2.17.191"
 ]
 
 dependencies {
@@ -26,6 +27,7 @@ dependencies {
 
     testImplementation group: 'com.deque', name: 'axe-selenium', version:"${dependencyVersions.axe_version}"
     testImplementation group: 'org.json', name: 'json', version:"${dependencyVersions.json_version}"
+    testImplementation "software.amazon.awssdk:s3:${dependencyVersions.aws_sdk_version}"
 
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${dependencyVersions.junit_version}"
 }

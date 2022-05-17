@@ -9,12 +9,21 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import software.amazon.awssdk.core.retry.backoff.BackoffStrategy;
+import software.amazon.awssdk.core.waiters.WaiterOverrideConfiguration;
+import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
+import software.amazon.awssdk.services.s3.model.GetObjectRequest;
+import software.amazon.awssdk.services.s3.model.HeadObjectRequest;
 
 import java.net.MalformedURLException;
 import java.net.URI;
+import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 
 import static java.time.temporal.ChronoUnit.MINUTES;
+import static java.time.temporal.ChronoUnit.SECONDS;
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static uk.gov.di.test.acceptance.AuthenticationJourneyPages.ENTER_CODE;
@@ -28,10 +37,14 @@ public class LoginStepDefinitions extends SignInStepDefinitions {
     private String emailAddress;
     private String password;
     private String sixDigitCodePhone;
+    private S3Client s3Client;
 
     @Before
     public void setupWebdriver() throws MalformedURLException {
         super.setupWebdriver();
+        s3Client = S3Client.builder()
+                .region(Region.EU_WEST_2)
+                .build();
     }
 
     @Given("the login services are running")
@@ -102,7 +115,7 @@ public class LoginStepDefinitions extends SignInStepDefinitions {
     }
 
     @When("the existing user enters the six digit security code from their phone")
-    public void theExistingUserEntersTheSixDigitSecurityCodeFromTheirPhone() {
+    public void theExistingUserEntersTheSixDigitSecurityCodeFromTheirPhone() throws Throwable {
         WebElement sixDigitSecurityCodeField = driver.findElement(By.id("code"));
         if (DEBUG_MODE) {
             new WebDriverWait(driver, Duration.of(1, MINUTES))
@@ -112,7 +125,35 @@ public class LoginStepDefinitions extends SignInStepDefinitions {
                                             sixDigitSecurityCodeField.getAttribute("value").length()
                                                     == 6);
         } else {
-            sixDigitSecurityCodeField.sendKeys(sixDigitCodePhone);
+            var waiter = s3Client.waiter().waitUntilObjectExists(
+                    HeadObjectRequest
+                            .builder()
+                            .bucket("<bucket-name>")
+                            .key("<phone-number>")
+                            .build(),
+                    WaiterOverrideConfiguration
+                            .builder()
+                            .backoffStrategy(BackoffStrategy.defaultStrategy())
+                            .maxAttempts(10)
+                            .waitTimeout(Duration.of(5, SECONDS))
+                            .build()).matched();
+
+            assertTrue(waiter.exception().isEmpty());
+
+            var response = s3Client.getObjectAsBytes(GetObjectRequest
+                    .builder()
+                    .bucket("<bucket-name>")
+                    .key("<phone-number>")
+                    .build());
+
+            var code = response.asUtf8String();
+            s3Client.deleteObject(DeleteObjectRequest
+                    .builder()
+                    .bucket("<bucket-name>")
+                    .key("<phone-number>")
+                    .build());
+
+            sixDigitSecurityCodeField.sendKeys(code);
         }
         findAndClickContinue();
     }
