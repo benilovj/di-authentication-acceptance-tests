@@ -29,6 +29,8 @@ public class SignInStepDefinitions {
             System.getenv().getOrDefault("RP_URL", "http://localhost:8081/");
     protected static final String AM_URL =
             System.getenv().getOrDefault("AM_URL", "http://localhost:8081/");
+    protected static final String DOC_APP_STUB_URL =
+            System.getenv().getOrDefault("DOC_APP_STUB_URL", "http://localhost:8085/");
     protected static final Boolean SELENIUM_LOCAL =
             Boolean.parseBoolean(System.getenv().getOrDefault("SELENIUM_LOCAL", "false"));
     protected static final Boolean SELENIUM_HEADLESS =
