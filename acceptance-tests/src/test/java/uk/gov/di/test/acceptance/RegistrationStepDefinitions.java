@@ -75,6 +75,12 @@ public class RegistrationStepDefinitions extends SignInStepDefinitions {
         tcPassword = System.getenv().get("TERMS_AND_CONDITIONS_TEST_USER_PASSWORD");
     }
 
+    @And("a new auth app user has valid credentials")
+    public void theNewAuthAppUserHasValidCredentials() {
+        emailAddress = System.getenv().get("TEST_USER_AUTH_APP_EMAIL");
+        password = System.getenv().get("TEST_USER_AUTH_APP_PASSWORD");
+    }
+
     @And("the new user clears cookies")
     public void theNewUserClearsCookies() {
         driver.manage().deleteAllCookies();
@@ -206,6 +212,27 @@ public class RegistrationStepDefinitions extends SignInStepDefinitions {
         findAndClickContinue();
     }
 
+    @When("the new user chooses {string} to get security codes")
+    public void theNewUserChoosesHowToGetSecurityCodes(String optionId) {
+        WebElement radioTextMessageSecurityCodes =
+                driver.findElement(By.id(optionId));
+        radioTextMessageSecurityCodes.click();
+        findAndClickContinue();
+    }
+
+    @Then("the new user is taken to the setup authenticator app page")
+    public void theNewUserIsTakenToTheSetupAuthenticatorAppPage() {
+        waitForPageLoadThenValidate(SETUP_AUTHENTICATOR_APP);
+    }
+
+    @When("the new user adds the secret to their authenticator app")
+    public void theNewUserAddsTheSecretToTheirAuthenticatorApp() {
+    }
+
+    @And("the new user enters the six digit security code from their authenticator app")
+    public void theNewUserEntersTheSixDigitSecurityCodeFromTheirAuthenticatorApp() {
+    }
+    
     @Then("the new user is taken to the enter phone number page")
     public void theNewUserIsTakenToTheEnterPhoneNumberPage() {
         waitForPageLoadThenValidate(ENTER_PHONE_NUMBER);

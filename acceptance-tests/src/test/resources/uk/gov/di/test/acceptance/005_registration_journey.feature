@@ -47,7 +47,7 @@ Feature: Registration Journey
     And the new user creates a password
     Then the new user is shown an error message
 
-  Scenario: User successfully registers
+  Scenario: User successfully registers with text message 2FA
     Given the registration services are running
     And a new user has valid credentials
     And the new user clears cookies
@@ -70,6 +70,39 @@ Feature: Registration Journey
     When the new user enters their mobile phone number
     Then the new user is taken to the check your phone page
     When the new user enters the six digit security code from their phone
+    And there are no accessibility violations
+    Then the new user is taken to the account created page
+    When the new user clicks the continue button
+    And there are no accessibility violations
+    Then the new user is taken the the share info page
+    When the new user agrees to share their info
+    Then the new user is returned to the service
+    When the new user clicks by name "logout"
+    And there are no accessibility violations
+    Then the new user is taken to the signed out page
+
+  Scenario: User successfully registers with authenticator app 2FA
+    Given the registration services are running
+    And a new auth app user has valid credentials
+    And the new user clears cookies
+    When the new user visits the stub relying party
+    And the new user clicks "govuk-signin-button"
+    Then the new user is taken to the Identity Provider Login Page
+    When the new user selects create an account
+    And there are no accessibility violations
+    Then the new user is taken to the enter your email page
+    When the new user enters their email address
+    Then the new user is asked to check their email
+    When the new user enters the six digit security code from their email
+    And there are no accessibility violations
+    Then the new user is taken to the create your password page
+    When the new user creates a password
+    And there are no accessibility violations
+    Then the new user is taken to the get security codes page
+    When the new user chooses "mfa-options-auth-app" to get security codes
+    Then the new user is taken to the setup authenticator app page
+    When the new user adds the secret to their authenticator app
+    And the new user enters the six digit security code from their authenticator app
     And there are no accessibility violations
     Then the new user is taken to the account created page
     When the new user clicks the continue button
